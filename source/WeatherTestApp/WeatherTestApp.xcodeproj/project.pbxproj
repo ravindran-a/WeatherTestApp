@@ -34,6 +34,28 @@
 		DE9DF1342963213D002DD877 /* WeatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF12A2963213D002DD877 /* WeatherInfo.swift */; };
 		DE9DF1352963213D002DD877 /* WeatherInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF12D2963213D002DD877 /* WeatherInfoCell.swift */; };
 		DE9DF1362963213D002DD877 /* WeatherInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF12E2963213D002DD877 /* WeatherInfoViewController.swift */; };
+		DE9DF13C29635472002DD877 /* WeatherInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF13B29635472002DD877 /* WeatherInfoViewModelTests.swift */; };
+		DE9DF13E29635486002DD877 /* WeatherDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF13D29635486002DD877 /* WeatherDetailViewModelTests.swift */; };
+		DE9DF13F29635DE1002DD877 /* WeatherInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF1282963213D002DD877 /* WeatherInfoViewModel.swift */; };
+		DE9DF14029635DFD002DD877 /* WeatherInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF12E2963213D002DD877 /* WeatherInfoViewController.swift */; };
+		DE9DF14129635E04002DD877 /* WeatherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF11F2963213D002DD877 /* WeatherDetailViewModel.swift */; };
+		DE9DF14229635E09002DD877 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF1252963213D002DD877 /* WeatherDetailViewController.swift */; };
+		DE9DF14329635E15002DD877 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10929632104002DD877 /* WeatherService.swift */; };
+		DE9DF14429635E19002DD877 /* WeatherServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF0FF29632104002DD877 /* WeatherServiceProtocol.swift */; };
+		DE9DF14529635E1F002DD877 /* MockWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10A29632104002DD877 /* MockWeatherService.swift */; };
+		DE9DF14629635EE6002DD877 /* WeatherCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10729632104002DD877 /* WeatherCoordinator.swift */; };
+		DE9DF14729635F2C002DD877 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10029632104002DD877 /* Coordinator.swift */; };
+		DE9DF148296360E3002DD877 /* APIEndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10E29632104002DD877 /* APIEndPoints.swift */; };
+		DE9DF149296360EA002DD877 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10229632104002DD877 /* ApiManager.swift */; };
+		DE9DF14A296360F2002DD877 /* WeatherHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10C29632104002DD877 /* WeatherHelper.swift */; };
+		DE9DF14B296360F5002DD877 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10429632104002DD877 /* UIFactory.swift */; };
+		DE9DF14C296360F7002DD877 /* String+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF11029632104002DD877 /* String+Helper.swift */; };
+		DE9DF14D296360FD002DD877 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF10629632104002DD877 /* AppCoordinator.swift */; };
+		DE9DF14E2963614D002DD877 /* WeatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF12A2963213D002DD877 /* WeatherInfo.swift */; };
+		DE9DF14F29636188002DD877 /* WeatherInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF1232963213D002DD877 /* WeatherInfoHeaderView.swift */; };
+		DE9DF1502963618B002DD877 /* WeatherDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF1242963213D002DD877 /* WeatherDetailCell.swift */; };
+		DE9DF15129636190002DD877 /* WeatherInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF12D2963213D002DD877 /* WeatherInfoCell.swift */; };
+		DE9DF1532963642E002DD877 /* WeatherHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9DF1522963642E002DD877 /* WeatherHelpersTests.swift */; };
 		E472D60467F124D91D66174C /* Pods_WeatherTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7A8CEAB049FC86125FC8F3 /* Pods_WeatherTestApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +113,9 @@
 		DE9DF12A2963213D002DD877 /* WeatherInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInfo.swift; sourceTree = "<group>"; };
 		DE9DF12D2963213D002DD877 /* WeatherInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInfoCell.swift; sourceTree = "<group>"; };
 		DE9DF12E2963213D002DD877 /* WeatherInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherInfoViewController.swift; sourceTree = "<group>"; };
+		DE9DF13B29635472002DD877 /* WeatherInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoViewModelTests.swift; sourceTree = "<group>"; };
+		DE9DF13D29635486002DD877 /* WeatherDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewModelTests.swift; sourceTree = "<group>"; };
+		DE9DF1522963642E002DD877 /* WeatherHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherHelpersTests.swift; sourceTree = "<group>"; };
 		E73E38E412B5D2DF0A68C78C /* Pods-WeatherTestAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherTestAppTests.debug.xcconfig"; path = "Target Support Files/Pods-WeatherTestAppTests/Pods-WeatherTestAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FA7A8CEAB049FC86125FC8F3 /* Pods_WeatherTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -184,6 +209,9 @@
 			isa = PBXGroup;
 			children = (
 				DE9DF0E329632046002DD877 /* WeatherTestAppTests.swift */,
+				DE9DF13B29635472002DD877 /* WeatherInfoViewModelTests.swift */,
+				DE9DF13D29635486002DD877 /* WeatherDetailViewModelTests.swift */,
+				DE9DF1522963642E002DD877 /* WeatherHelpersTests.swift */,
 			);
 			path = WeatherTestAppTests;
 			sourceTree = "<group>";
@@ -659,7 +687,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE9DF14B296360F5002DD877 /* UIFactory.swift in Sources */,
+				DE9DF14329635E15002DD877 /* WeatherService.swift in Sources */,
+				DE9DF1502963618B002DD877 /* WeatherDetailCell.swift in Sources */,
+				DE9DF14A296360F2002DD877 /* WeatherHelper.swift in Sources */,
 				DE9DF0E429632046002DD877 /* WeatherTestAppTests.swift in Sources */,
+				DE9DF14529635E1F002DD877 /* MockWeatherService.swift in Sources */,
+				DE9DF14029635DFD002DD877 /* WeatherInfoViewController.swift in Sources */,
+				DE9DF14D296360FD002DD877 /* AppCoordinator.swift in Sources */,
+				DE9DF148296360E3002DD877 /* APIEndPoints.swift in Sources */,
+				DE9DF14129635E04002DD877 /* WeatherDetailViewModel.swift in Sources */,
+				DE9DF14229635E09002DD877 /* WeatherDetailViewController.swift in Sources */,
+				DE9DF13F29635DE1002DD877 /* WeatherInfoViewModel.swift in Sources */,
+				DE9DF15129636190002DD877 /* WeatherInfoCell.swift in Sources */,
+				DE9DF14629635EE6002DD877 /* WeatherCoordinator.swift in Sources */,
+				DE9DF14729635F2C002DD877 /* Coordinator.swift in Sources */,
+				DE9DF149296360EA002DD877 /* ApiManager.swift in Sources */,
+				DE9DF14F29636188002DD877 /* WeatherInfoHeaderView.swift in Sources */,
+				DE9DF14429635E19002DD877 /* WeatherServiceProtocol.swift in Sources */,
+				DE9DF14C296360F7002DD877 /* String+Helper.swift in Sources */,
+				DE9DF14E2963614D002DD877 /* WeatherInfo.swift in Sources */,
+				DE9DF13C29635472002DD877 /* WeatherInfoViewModelTests.swift in Sources */,
+				DE9DF1532963642E002DD877 /* WeatherHelpersTests.swift in Sources */,
+				DE9DF13E29635486002DD877 /* WeatherDetailViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

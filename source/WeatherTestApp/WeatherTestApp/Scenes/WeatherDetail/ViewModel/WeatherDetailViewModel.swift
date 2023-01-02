@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class WeatherDetailViewModel {
-    private weak var navigation: WeatherNavigation!
+    private var navigation: WeatherCoordinator!
     private var apiService: WeatherServiceProtocol!
     private var selectedCityName: String!
     private var selectedLocationMap: (String, String)!
@@ -17,7 +17,7 @@ class WeatherDetailViewModel {
     private let temperatureUnits: [String] = ["fahrenheit", "celsius"]
     private var selectedTemperatureUnitIndex: Int = 0
     
-    init(navigation: WeatherNavigation, apiService: WeatherServiceProtocol, selectedCityName: String, selectedLocationMap: (String, String),
+    init(navigation: WeatherCoordinator, apiService: WeatherServiceProtocol, selectedCityName: String, selectedLocationMap: (String, String),
          selectedWeatherInfo: WeatherInfo, selectedTemperatureUnitIndex: Int) {
         self.navigation = navigation
         self.apiService = apiService

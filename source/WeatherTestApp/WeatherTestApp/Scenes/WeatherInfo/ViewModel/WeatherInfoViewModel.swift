@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class WeatherInfoViewModel {
-    private weak var navigation: WeatherNavigation!
+    private var navigation: WeatherCoordinator!
     private var apiService: WeatherServiceProtocol!
     private var cities: [String]!
     private var locationMap: [(String, String)]!
@@ -18,7 +18,7 @@ class WeatherInfoViewModel {
     private var weatherInfo: [WeatherInfo] = []
     private var selectedTemperatureUnitIndex: Int = 0
     
-    init(navigation: WeatherNavigation, apiService: WeatherServiceProtocol, cities: [String], locationMap: [(String, String)]) {
+    init(navigation: WeatherCoordinator, apiService: WeatherServiceProtocol, cities: [String], locationMap: [(String, String)]) {
         self.navigation = navigation
         self.apiService = apiService
         self.cities = cities
@@ -39,7 +39,7 @@ class WeatherInfoViewModel {
         }
     }
     
-    func getCityWeatherData(_ index: Int) async throws {
+    private func getCityWeatherData(_ index: Int) async throws {
         let location = locationMap[index]
         let temperatureUnit = temperatureUnits[selectedTemperatureUnitIndex]
         if let (data, _) = try await apiService.getCurrentWeatherData(latitude: location.0, longitude: location.1, temperatureUnit: temperatureUnit) {
@@ -70,6 +70,9 @@ class WeatherInfoViewModel {
     }
     
     func getCurrentWeatherIcon(_ index: Int) -> UIImage? {
+        if index > weatherInfo.count {
+            return nil
+        }
         let weatherData = weatherInfo[index]
         return WeatherHelper.getImageForWeatherCode(weatherData.currentWeather?.weathercode ?? 0)
     }
