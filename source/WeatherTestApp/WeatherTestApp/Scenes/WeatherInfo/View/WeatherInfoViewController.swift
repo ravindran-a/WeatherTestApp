@@ -10,12 +10,25 @@ import UIKit
 import SnapKit
 
 class WeatherInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    var viewModel: WeatherInfoViewModel!
-    var segmentedControl: UISegmentedControl!
-    var citiesLabel: UILabel!
-    var weatherInfoTableView: UITableView!
-    var activityIndicator: UIActivityIndicatorView!
+    
+    private var viewModel: WeatherInfoViewModel!
+    private var segmentedControl: UISegmentedControl!
+    private var citiesLabel: UILabel!
+    private var weatherInfoTableView: UITableView!
+    private var activityIndicator: UIActivityIndicatorView!
+    
+    convenience init(viewModel: WeatherInfoViewModel) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+   
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +47,7 @@ class WeatherInfoViewController: UIViewController, UITableViewDelegate, UITableV
         self.title = ""
     }
     
-    func setupViews() {
+    private func setupViews() {
         self.view.backgroundColor = .white
         segmentedControl = UIFactory.getSegmentedControl(id: "segmentedControl", items: ["F", "C"])
         view.addSubview(segmentedControl)
@@ -73,34 +86,30 @@ class WeatherInfoViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    @objc func temperatureUnitUpdated() {
-        viewModel.selectedTemperatureUnitIndex = segmentedControl.selectedSegmentIndex
+    @objc private func temperatureUnitUpdated() {
+        viewModel.updateTemperatureUnit(segmentedControl.selectedSegmentIndex)
         fetchData(isRefresh: true)
     }
-
-    @objc func refreshData() {
+    
+    @objc private func refreshData() {
         weatherInfoTableView.refreshControl?.endRefreshing()
         fetchData(isRefresh: true)
     }
     
-    func fetchData(isRefresh: Bool = false) {
+    private func fetchData(isRefresh: Bool = false) {
         activityIndicator.startAnimating()
-        viewModel.getWeatherData(refresh: isRefresh) { [weak self] error in
-            self?.activityIndicator.stopAnimating()
-            if error != nil {
-                self?.showAlert(title: "Error Fetching Weather Info", message: error?.localizedDescription ?? "")
-            } else {
-                if self?.viewModel.getNumberOfRows() == 0 {
-                    
-                } else {
-                    
-                }
-                self?.weatherInfoTableView.reloadData()
+        Task {
+            do {
+                try await viewModel.getWeatherData(refresh: isRefresh)
+                self.weatherInfoTableView.reloadData()
+                activityIndicator.stopAnimating()
+            } catch let error {
+                self.showAlert(title: "Error Fetching Weather Info", message: error.localizedDescription )
             }
         }
     }
     
-    func showAlert(title: String, message: String) {
+    private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -116,24 +125,19 @@ extension WeatherInfoViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: WeatherInfoCell.cellIdentifier, for: indexPath) as? WeatherInfoCell {
-            configureWeatherInfoCell(indexPath, cell: cell)
+            cell.configureData(cityName: viewModel.getCityName(indexPath.row), temperature: viewModel.getCityTemperature(indexPath.row),
+                               icon: viewModel.getCurrentWeatherIcon(indexPath.row))
             cell.selectionStyle = .none
             return cell
         }
         return UITableViewCell()
     }
     
-    func configureWeatherInfoCell(_ indexPath: IndexPath, cell: WeatherInfoCell) {
-        cell.cityName.text = viewModel.getCityName(indexPath.row)
-        cell.cityTemperature.text = viewModel.getCityTemperature(indexPath.row)
-        cell.currentWeatherIcon.image = viewModel.getCurrentWeatherIcon(indexPath.row)
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         viewModel.gotoWeatherDetail(indexPath.row)
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

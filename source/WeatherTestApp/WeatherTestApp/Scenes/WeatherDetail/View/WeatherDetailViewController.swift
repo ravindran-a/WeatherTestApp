@@ -9,10 +9,23 @@ import Foundation
 import UIKit
 
 class WeatherDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    var viewModel: WeatherDetailViewModel!
-    var weatherDetailTableView: UITableView!
-    var activityIndicator: UIActivityIndicatorView!
+    
+    private var viewModel: WeatherDetailViewModel!
+    private var weatherDetailTableView: UITableView!
+    private var activityIndicator: UIActivityIndicatorView!
+    
+    convenience init(viewModel: WeatherDetailViewModel) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +34,7 @@ class WeatherDetailViewController: UIViewController, UITableViewDelegate, UITabl
         fetchData()
     }
     
-    func setupViews() {
+    private func setupViews() {
         self.view.backgroundColor = .white
         
         weatherDetailTableView = UIFactory.getTableView(id: "weatherDetailTableView", style: .plain, dataSource: self, delegate: self)
@@ -43,25 +56,26 @@ class WeatherDetailViewController: UIViewController, UITableViewDelegate, UITabl
             make.center.equalToSuperview()
         }
     }
-
-    @objc func refreshData() {
+    
+    @objc private func refreshData() {
         weatherDetailTableView.refreshControl?.endRefreshing()
         fetchData(isRefresh: true)
     }
     
-    func fetchData(isRefresh: Bool = false) {
+    private func fetchData(isRefresh: Bool = false) {
         activityIndicator.startAnimating()
-        viewModel.getWeatherDetailData(refresh: isRefresh) { [weak self] error in
-            self?.activityIndicator.stopAnimating()
-            if error != nil {
-                self?.showAlert(title: "Error Fetching Weather Detail", message: error?.localizedDescription ?? "")
-            } else {
-                self?.weatherDetailTableView.reloadData()
+        Task {
+            do {
+                try await viewModel.getWeatherDetailData(refresh: isRefresh)
+                self.weatherDetailTableView.reloadData()
+                self.activityIndicator.stopAnimating()
+            } catch let error {
+                self.showAlert(title: "Error Fetching Weather Detail", message: error.localizedDescription)
             }
         }
     }
     
-    func showAlert(title: String, message: String) {
+    private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -77,36 +91,25 @@ extension WeatherDetailViewController {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: WeatherInfoHeaderView.identifier) as? WeatherInfoHeaderView {
-            configureWeatherInfoHeader(view)
+            view.configureData(cityName: viewModel.getCityName(), temperature: viewModel.getCityTemperature(), icon: viewModel.getCurrentWeatherIcon())
             return view
         }
         return nil
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         if let cell = tableView.dequeueReusableCell(withIdentifier: WeatherDetailCell.cellIdentifier, for: indexPath) as? WeatherDetailCell {
-            configureWeatherDetailCell(indexPath, cell: cell)
+        if let cell = tableView.dequeueReusableCell(withIdentifier: WeatherDetailCell.cellIdentifier, for: indexPath) as? WeatherDetailCell {
+            cell.configureData(time: viewModel.getTime(indexPath.row), temperature: viewModel.getTemperature(indexPath.row))
             cell.selectionStyle = .none
             return cell
         }
         return UITableViewCell()
     }
     
-    func configureWeatherInfoHeader(_ view: WeatherInfoHeaderView) {
-        view.cityName.text = viewModel.getCityName()
-        view.cityTemperature.text = viewModel.getCityTemperature()
-        view.currentWeatherIcon.image = viewModel.getCurrentWeatherIcon()
-    }
-    
-    func configureWeatherDetailCell(_ indexPath: IndexPath, cell: WeatherDetailCell) {
-        cell.time.text = viewModel.getTime(indexPath.row)
-        cell.temperature.text = viewModel.getTemperature(indexPath.row)
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

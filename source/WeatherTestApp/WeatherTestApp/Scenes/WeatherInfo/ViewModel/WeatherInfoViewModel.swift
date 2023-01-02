@@ -9,48 +9,42 @@ import Foundation
 import UIKit
 
 class WeatherInfoViewModel {
-    weak var navigation: WeatherNavigation!
-    var apiService: WeatherServiceProtocol!
-    var cities: [String]!
-    var locationMap: [(String, String)]!
-    let temperatureUnits: [String] = ["fahrenheit", "celsius"]
-    var callbackCounter: Int = 0
-    var weatherInfo: [WeatherInfo] = []
-    var selectedTemperatureUnitIndex: Int = 0
+    private weak var navigation: WeatherNavigation!
+    private var apiService: WeatherServiceProtocol!
+    private var cities: [String]!
+    private var locationMap: [(String, String)]!
+    private let temperatureUnits: [String] = ["fahrenheit", "celsius"]
+    private var callbackCounter: Int = 0
+    private var weatherInfo: [WeatherInfo] = []
+    private var selectedTemperatureUnitIndex: Int = 0
     
-    func getWeatherData(refresh: Bool = false, completion: ((Error?) -> Void)? = nil) {
+    init(navigation: WeatherNavigation, apiService: WeatherServiceProtocol, cities: [String], locationMap: [(String, String)]) {
+        self.navigation = navigation
+        self.apiService = apiService
+        self.cities = cities
+        self.locationMap = locationMap
+    }
+    
+    func getWeatherData(refresh: Bool = false) async throws {
         if refresh {
             weatherInfo.removeAll()
             callbackCounter = 0
         }
-        getCityWeatherData(callbackCounter) {[weak self] error in
-            self?.callbackCounter += 1
-            if self?.callbackCounter == self?.cities.count {
-                self?.callbackCounter = 0
-                completion?(error)
-            } else {
-                self?.getWeatherData(completion: completion)
-            }
+        try await getCityWeatherData(callbackCounter)
+        self.callbackCounter += 1
+        if self.callbackCounter == self.cities.count {
+            self.callbackCounter = 0
+        } else {
+            try await self.getWeatherData()
         }
     }
     
-    func getCityWeatherData(_ index: Int, completion: ((Error?) -> Void)? = nil) {
+    func getCityWeatherData(_ index: Int) async throws {
         let location = locationMap[index]
         let temperatureUnit = temperatureUnits[selectedTemperatureUnitIndex]
-        apiService.getCurrentWeatherData(latitude: location.0, longitude: location.1, temperatureUnit: temperatureUnit) { [weak self] data, error in
-            guard let data = data, error == nil else {
-                debugPrint(error!)
-                completion?(error)
-                return
-            }
-            do {
-                let model = try JSONDecoder().decode(WeatherInfo.self, from: data)
-                self?.weatherInfo.append(model)
-                completion?(nil)
-            } catch let error {
-                debugPrint(error)
-                completion?(error)
-            }
+        if let (data, _) = try await apiService.getCurrentWeatherData(latitude: location.0, longitude: location.1, temperatureUnit: temperatureUnit) {
+            let model = try JSONDecoder().decode(WeatherInfo.self, from: data)
+            self.weatherInfo.append(model)
         }
     }
     
@@ -78,5 +72,9 @@ class WeatherInfoViewModel {
     func getCurrentWeatherIcon(_ index: Int) -> UIImage? {
         let weatherData = weatherInfo[index]
         return WeatherHelper.getImageForWeatherCode(weatherData.currentWeather?.weathercode ?? 0)
+    }
+    
+    func updateTemperatureUnit(_ unit: Int) {
+        self.selectedTemperatureUnitIndex = unit
     }
 }

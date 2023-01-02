@@ -8,11 +8,11 @@
 import Foundation
 
 class MockWeatherService: WeatherServiceProtocol {
-    func getCurrentWeatherData(latitude: String, longitude: String, temperatureUnit: String, completion: ((Data?, Error?) -> Void)?) {
-        
+    func getCurrentWeatherData(latitude: String, longitude: String, temperatureUnit: String) async throws -> (Data, URLResponse)? {
+        return nil
     }
     
-    func getDetailedWeatherData(latitude: String, longitude: String, temperatureUnit: String, completion: ((Data?, Error?) -> Void)?) {
-        
+    func getDetailedWeatherData(latitude: String, longitude: String, temperatureUnit: String) async throws -> (Data, URLResponse)? {
+        return nil
     }
 }

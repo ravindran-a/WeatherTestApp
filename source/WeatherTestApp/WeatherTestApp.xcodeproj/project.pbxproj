@@ -291,9 +291,9 @@
 		DE9DF11D2963213D002DD877 /* WeatherDetail */ = {
 			isa = PBXGroup;
 			children = (
-				DE9DF11E2963213D002DD877 /* ViewModel */,
 				DE9DF1202963213D002DD877 /* Model */,
 				DE9DF1212963213D002DD877 /* View */,
+				DE9DF11E2963213D002DD877 /* ViewModel */,
 			);
 			path = WeatherDetail;
 			sourceTree = "<group>";
@@ -334,9 +334,9 @@
 		DE9DF1262963213D002DD877 /* WeatherInfo */ = {
 			isa = PBXGroup;
 			children = (
-				DE9DF1272963213D002DD877 /* ViewModel */,
 				DE9DF1292963213D002DD877 /* Model */,
 				DE9DF12B2963213D002DD877 /* View */,
+				DE9DF1272963213D002DD877 /* ViewModel */,
 			);
 			path = WeatherInfo;
 			sourceTree = "<group>";

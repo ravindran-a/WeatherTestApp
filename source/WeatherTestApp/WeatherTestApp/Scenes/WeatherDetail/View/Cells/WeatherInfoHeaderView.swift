@@ -11,21 +11,21 @@ class WeatherInfoHeaderView: UITableViewHeaderFooterView {
     
     static let identifier: String = "WeatherInfoHeaderView"
     
-    lazy var containerView: UIView = UIFactory.getView(id: "containerView")
-    lazy var cityName: UILabel = UIFactory.getLabel(id: "cityName")
-    lazy var cityTemperature: UILabel = UIFactory.getLabel(id: "cityTemperature")
-    lazy var currentWeatherIcon: UIImageView = UIFactory.getImageView(id: "currentWeatherIcon")
+    private lazy var containerView: UIView = UIFactory.getView(id: "containerView")
+    private lazy var cityName: UILabel = UIFactory.getLabel(id: "cityName")
+    private lazy var cityTemperature: UILabel = UIFactory.getLabel(id: "cityTemperature")
+    private lazy var currentWeatherIcon: UIImageView = UIFactory.getImageView(id: "currentWeatherIcon")
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        loadCellComponents()
+        loadHeaderComponents()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func loadCellComponents() {
+    private func loadHeaderComponents() {
         contentView.backgroundColor = .white
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -54,5 +54,11 @@ class WeatherInfoHeaderView: UITableViewHeaderFooterView {
             make.centerY.equalToSuperview()
             make.height.width.equalTo(44)
         }
+    }
+    
+    func configureData(cityName: String?, temperature: String?, icon: UIImage?) {
+        self.cityName.text = cityName
+        cityTemperature.text = temperature
+        currentWeatherIcon.image = icon
     }
 }

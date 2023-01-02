@@ -30,28 +30,16 @@ class WeatherCoordinator: Coordinator {
 
 extension WeatherCoordinator: WeatherNavigation {
     func launchWeatherInfoPage() {
-        let controller: WeatherInfoViewController = WeatherInfoViewController()
-        let viewModel: WeatherInfoViewModel = WeatherInfoViewModel()
         let cities: [String] = ["New York", "Dallas", "Miami"]
         let location: [(String, String)] = [("40.71", "-74.01"), ("32.78", "-96.81"), ("25.77", "-80.19")]
-        viewModel.cities = cities
-        viewModel.locationMap = location
-        viewModel.navigation = self
-        viewModel.apiService = WeatherService()
-        controller.viewModel = viewModel
+        let viewModel: WeatherInfoViewModel = WeatherInfoViewModel(navigation: self, apiService: WeatherService(), cities: cities, locationMap: location)
+        let controller: WeatherInfoViewController = WeatherInfoViewController(viewModel: viewModel)
         navigationController.pushViewController(controller, animated: true)
     }
     
     func launchWeatherDetailPage(selectedCityName: String, selectedLocationMap: (String, String), selectedWeatherInfo: WeatherInfo, selectedTemperatureUnitIndex: Int) {
-        let controller: WeatherDetailViewController = WeatherDetailViewController()
-        let viewModel: WeatherDetailViewModel = WeatherDetailViewModel()
-        viewModel.apiService = WeatherService()
-        viewModel.selectedCityName = selectedCityName
-        viewModel.selectedLocationMap = selectedLocationMap
-        viewModel.selectedWeatherInfo = selectedWeatherInfo
-        viewModel.selectedTemperatureUnitIndex = selectedTemperatureUnitIndex
-        viewModel.navigation = self
-        controller.viewModel = viewModel
+        let viewModel: WeatherDetailViewModel = WeatherDetailViewModel(navigation: self, apiService: WeatherService(), selectedCityName: selectedCityName, selectedLocationMap: selectedLocationMap, selectedWeatherInfo: selectedWeatherInfo, selectedTemperatureUnitIndex: selectedTemperatureUnitIndex)
+        let controller: WeatherDetailViewController = WeatherDetailViewController(viewModel: viewModel)
         navigationController.pushViewController(controller, animated: true)
     }
 }

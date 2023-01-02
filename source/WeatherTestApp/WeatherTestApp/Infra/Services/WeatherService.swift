@@ -8,14 +8,12 @@
 import Foundation
 
 class WeatherService: WeatherServiceProtocol {
-    func getCurrentWeatherData(latitude: String, longitude: String, temperatureUnit: String, completion: ((Data?, Error?) -> Void)?) {
+    func getCurrentWeatherData(latitude: String, longitude: String, temperatureUnit: String) async throws -> (Data, URLResponse)? {
         let url = APIEndPoints.WeatherData.weatherInfo(latitude: latitude, longitude: longitude, temperatureUnit: temperatureUnit).url
-        ApiManager.shared.request(serviceURL: url) { data, error in
-            completion?(data, error)
-        }
+        return try await ApiManager.shared.request(serviceURL: url)
     }
     
-    func getDetailedWeatherData(latitude: String, longitude: String, temperatureUnit: String, completion: ((Data?, Error?) -> Void)?) {
+    func getDetailedWeatherData(latitude: String, longitude: String, temperatureUnit: String) async throws -> (Data, URLResponse)? {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd"
@@ -23,8 +21,6 @@ class WeatherService: WeatherServiceProtocol {
         
         let url = APIEndPoints.WeatherData.weatherDetail(latitude: latitude, longitude: longitude, temperatureUnit: temperatureUnit,
                                                          startDate: dateString, endDate: dateString).url
-        ApiManager.shared.request(serviceURL: url) { data, error in
-            completion?(data, error)
-        }
+        return try await ApiManager.shared.request(serviceURL: url)
     }
 }

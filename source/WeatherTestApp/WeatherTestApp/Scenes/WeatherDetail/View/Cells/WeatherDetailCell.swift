@@ -11,9 +11,9 @@ class WeatherDetailCell: UITableViewCell {
 
     static let cellIdentifier: String = "WeatherDetailCell"
     
-    lazy var containerView: UIView = UIFactory.getView(id: "containerView")
-    lazy var time: UILabel = UIFactory.getLabel(id: "time")
-    lazy var temperature: UILabel = UIFactory.getLabel(id: "temperature")
+    private lazy var containerView: UIView = UIFactory.getView(id: "containerView")
+    private lazy var time: UILabel = UIFactory.getLabel(id: "time")
+    private lazy var temperature: UILabel = UIFactory.getLabel(id: "temperature")
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,7 +28,7 @@ class WeatherDetailCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func loadCellComponents() {
+    private func loadCellComponents() {
         contentView.backgroundColor = .white
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -52,4 +52,8 @@ class WeatherDetailCell: UITableViewCell {
         temperature.textColor = UIColor.darkGray
     }
 
+    func configureData(time: String?, temperature: String?) {
+        self.time.text = time
+        self.temperature.text = temperature
+    }
 }

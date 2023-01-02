@@ -9,30 +9,29 @@ import Foundation
 import UIKit
 
 class WeatherDetailViewModel {
-    weak var navigation: WeatherNavigation!
-    var apiService: WeatherServiceProtocol!
-    let temperatureUnits: [String] = ["fahrenheit", "celsius"]
-    var selectedCityName: String!
-    var selectedLocationMap: (String, String)!
-    var selectedWeatherInfo: WeatherInfo!
-    var selectedTemperatureUnitIndex: Int = 0
+    private weak var navigation: WeatherNavigation!
+    private var apiService: WeatherServiceProtocol!
+    private var selectedCityName: String!
+    private var selectedLocationMap: (String, String)!
+    private var selectedWeatherInfo: WeatherInfo!
+    private let temperatureUnits: [String] = ["fahrenheit", "celsius"]
+    private var selectedTemperatureUnitIndex: Int = 0
     
-    func getWeatherDetailData(refresh: Bool = false, completion: ((Error?) -> Void)? = nil) {
+    init(navigation: WeatherNavigation, apiService: WeatherServiceProtocol, selectedCityName: String, selectedLocationMap: (String, String),
+         selectedWeatherInfo: WeatherInfo, selectedTemperatureUnitIndex: Int) {
+        self.navigation = navigation
+        self.apiService = apiService
+        self.selectedCityName = selectedCityName
+        self.selectedLocationMap = selectedLocationMap
+        self.selectedWeatherInfo = selectedWeatherInfo
+        self.selectedTemperatureUnitIndex = selectedTemperatureUnitIndex
+    }
+    
+    func getWeatherDetailData(refresh: Bool = false) async throws {
         let temperatureUnit = temperatureUnits[selectedTemperatureUnitIndex]
-        apiService.getDetailedWeatherData(latitude: selectedLocationMap.0, longitude: selectedLocationMap.1, temperatureUnit: temperatureUnit) { [weak self] data, error in
-            guard let data = data, error == nil else {
-                debugPrint(error!)
-                completion?(error)
-                return
-            }
-            do {
-                let model = try JSONDecoder().decode(WeatherInfo.self, from: data)
-                self?.selectedWeatherInfo = model
-                completion?(nil)
-            } catch let error {
-                debugPrint(error)
-                completion?(error)
-            }
+        if let (data, _) = try await apiService.getDetailedWeatherData(latitude: selectedLocationMap.0, longitude: selectedLocationMap.1, temperatureUnit: temperatureUnit) {
+            let model = try JSONDecoder().decode(WeatherInfo.self, from: data)
+            self.selectedWeatherInfo = model
         }
     }
     

@@ -11,10 +11,10 @@ class WeatherInfoCell: UITableViewCell {
 
     static let cellIdentifier: String = "WeatherInfoCell"
     
-    lazy var containerView: UIView = UIFactory.getView(id: "containerView")
-    lazy var cityName: UILabel = UIFactory.getLabel(id: "cityName")
-    lazy var cityTemperature: UILabel = UIFactory.getLabel(id: "cityTemperature")
-    lazy var currentWeatherIcon: UIImageView = UIFactory.getImageView(id: "currentWeatherIcon")
+    private lazy var containerView: UIView = UIFactory.getView(id: "containerView")
+    private lazy var cityName: UILabel = UIFactory.getLabel(id: "cityName")
+    private lazy var cityTemperature: UILabel = UIFactory.getLabel(id: "cityTemperature")
+    private lazy var currentWeatherIcon: UIImageView = UIFactory.getImageView(id: "currentWeatherIcon")
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,7 +29,7 @@ class WeatherInfoCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func loadCellComponents() {
+    private func loadCellComponents() {
         contentView.backgroundColor = .white
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -58,5 +58,11 @@ class WeatherInfoCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.height.width.equalTo(44)
         }
+    }
+    
+    func configureData(cityName: String?, temperature: String?, icon: UIImage?) {
+        self.cityName.text = cityName
+        cityTemperature.text = temperature
+        currentWeatherIcon.image = icon
     }
 }

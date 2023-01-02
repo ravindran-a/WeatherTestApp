@@ -39,18 +39,27 @@ class ApiManager: NSObject, URLSessionTaskDelegate {
         return request
     }
     
-    func request(serviceURL: String, httpMethod: HttpMethod = .get, completion: @escaping (Data?, Error?) -> Void) {
+    func request(serviceURL: String, httpMethod: HttpMethod = .get) async throws -> (Data, URLResponse) {
         let request = getRequest(serviceURL: serviceURL, httpMethod: httpMethod)
-        makeApiCall(request: request, completion: completion)
+        return try await makeApiCall(request: request)
     }
     
-    private func makeApiCall(request: URLRequest, completion: @escaping (Data?, Error?) -> Void) {
-        let sessionTask = self.session.dataTask(with: request) { (data, response, error) in
-            DispatchQueue.main.async {
-                completion(data, error)
+    private func makeApiCall(request: URLRequest) async throws -> (Data, URLResponse) {
+        return try await withCheckedThrowingContinuation { continuation in
+            let sessionTask = self.session.dataTask(with: request) { (data, response, error) in
+                DispatchQueue.main.async {
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        guard let data1 = data, let response1 = response else {
+                            fatalError("Expected non-nil result 'data1' in the non-error case")
+                        }
+                        continuation.resume(returning: (data1, response1))
+                    }
+                }
             }
+            sessionTask.resume()
         }
-        sessionTask.resume()
     }
     
     private func getFullEndpointUrl(serviceUrl: String) -> String {
