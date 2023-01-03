@@ -1,6 +1,6 @@
 //
 //  WeatherDetailViewController.swift
-//  SysvineWeatherApp
+//  WeatherTestApp
 //
 //  Created by Ravindran on 02/01/23.
 //
