@@ -10,7 +10,7 @@ import Foundation
 struct APIEndPoints {
     
     static let API_BASE_URL: String = "https://api.open-meteo.com/v1/"
-
+    
     enum WeatherData {
         case weatherInfo(latitude: String, longitude: String, temperatureUnit: String)
         case weatherDetail(latitude: String, longitude: String, temperatureUnit: String, startDate: String, endDate: String)

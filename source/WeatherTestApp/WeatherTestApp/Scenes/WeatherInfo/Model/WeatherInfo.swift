@@ -15,7 +15,7 @@ struct WeatherInfo: Codable {
     let currentWeather: CurrentWeather?
     let hourlyUnits: HourlyUnits?
     let hourly: Hourly?
-
+    
     enum CodingKeys: String, CodingKey {
         case latitude, longitude
         case generationtimeMS = "generationtime_ms"
@@ -38,7 +38,7 @@ struct CurrentWeather: Codable {
 struct Hourly: Codable {
     let time: [String]?
     let temperature2M, rain: [Double]?
-
+    
     enum CodingKeys: String, CodingKey {
         case time
         case temperature2M = "temperature_2m"
@@ -48,7 +48,7 @@ struct Hourly: Codable {
 
 struct HourlyUnits: Codable {
     let time, temperature2M, rain: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case time
         case temperature2M = "temperature_2m"

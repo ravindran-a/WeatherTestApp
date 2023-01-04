@@ -8,7 +8,7 @@
 import UIKit
 
 class WeatherDetailCell: UITableViewCell {
-
+    
     static let cellIdentifier: String = "WeatherDetailCell"
     
     private lazy var containerView: UIView = UIFactory.getView(id: "containerView")
@@ -19,7 +19,7 @@ class WeatherDetailCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         loadCellComponents()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,7 +27,7 @@ class WeatherDetailCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
+    
     private func loadCellComponents() {
         contentView.backgroundColor = .white
         contentView.addSubview(containerView)
@@ -51,7 +51,7 @@ class WeatherDetailCell: UITableViewCell {
         temperature.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         temperature.textColor = UIColor.darkGray
     }
-
+    
     func configureData(time: String?, temperature: String?) {
         self.time.text = time
         self.temperature.text = temperature

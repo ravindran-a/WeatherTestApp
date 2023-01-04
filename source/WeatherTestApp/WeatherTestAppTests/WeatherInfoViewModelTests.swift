@@ -9,7 +9,7 @@ import XCTest
 import WeatherTestApp
 
 final class WeatherInfoViewModelTests: XCTestCase {
-
+    
     let cities: [String] = ["New York", "Dallas", "Miami"]
     let location: [(String, String)] = [("40.71", "-74.01"), ("32.78", "-96.81"), ("25.77", "-80.19")]
     var coordinator: WeatherCoordinator!
@@ -22,11 +22,11 @@ final class WeatherInfoViewModelTests: XCTestCase {
         viewModel = WeatherInfoViewModel(navigation: coordinator, apiService: WeatherService(), cities: cities, locationMap: location)
         controller = WeatherInfoViewController(viewModel: viewModel)
     }
-
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
+    
     func testGetWeatherData() async throws {
         try? await viewModel.getWeatherData()
         try? await viewModel.getWeatherData(refresh: true)

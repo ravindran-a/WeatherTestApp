@@ -3,6 +3,13 @@ platform :ios, '14.0'
 workspace 'WeatherTestApp'
 use_frameworks!
 
+def shared
+  use_frameworks!
+  pod 'SwiftLint' #used for linting
+  pod 'SnapKit' #used for auto-layoutting on code
+  pod 'IOSSecuritySuite' #used for Jailbreak checks
+end
+
 target 'WeatherTestApp' do
   project 'WeatherTestApp/WeatherTestApp.xcodeproj'
   
@@ -10,16 +17,16 @@ target 'WeatherTestApp' do
   inhibit_all_warnings!
   
   # Pods for WeatherInfo
-  pod 'SwiftLint' #used for linting
-  pod 'SnapKit' #used for auto-layoutting on code
+  shared
   
   target 'WeatherTestAppTests' do
     inherit! :search_paths
-    # Pods for testing
+    shared
   end
 
   target 'WeatherTestAppUITests' do
     inherit! :search_paths
+    shared
   end
   
 end

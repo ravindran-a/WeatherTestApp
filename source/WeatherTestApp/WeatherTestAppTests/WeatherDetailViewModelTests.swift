@@ -9,7 +9,7 @@ import XCTest
 import WeatherTestApp
 
 final class WeatherDetailViewModelTest: XCTestCase {
-
+    
     var coordinator: WeatherCoordinator!
     var viewModel: WeatherDetailViewModel!
     var controller: WeatherDetailViewController!
@@ -25,7 +25,7 @@ final class WeatherDetailViewModelTest: XCTestCase {
         viewModel = WeatherDetailViewModel(navigation: coordinator, apiService: WeatherService(), selectedCityName: "New York", selectedLocationMap: ("40.71", "-74.01"), selectedWeatherInfo: info, selectedTemperatureUnitIndex: 0)
         controller = WeatherDetailViewController(viewModel: viewModel)
     }
-
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
@@ -45,5 +45,5 @@ final class WeatherDetailViewModelTest: XCTestCase {
         XCTAssertNotNil(viewModel.getCityTemperature())
         XCTAssertNotNil(viewModel.getCurrentWeatherIcon())
     }
-
+    
 }

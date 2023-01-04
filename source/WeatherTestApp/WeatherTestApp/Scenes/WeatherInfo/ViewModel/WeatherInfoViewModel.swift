@@ -25,6 +25,10 @@ class WeatherInfoViewModel {
         self.locationMap = locationMap
     }
     
+    func getSegmentedControlItems() -> [String] {
+        return ["F", "C"]
+    }
+    
     func getWeatherData(refresh: Bool = false) async throws {
         if refresh {
             weatherInfo.removeAll()

@@ -52,7 +52,8 @@ class ApiManager: NSObject, URLSessionTaskDelegate {
                         continuation.resume(throwing: error)
                     } else {
                         guard let data1 = data, let response1 = response else {
-                            fatalError("Expected non-nil result 'data1' in the non-error case")
+                            continuation.resume(throwing: APIError.runtimeError("Failed to receive API response"))
+                            return
                         }
                         continuation.resume(returning: (data1, response1))
                     }
