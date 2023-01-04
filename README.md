@@ -23,3 +23,5 @@ Do pod update/pod install as required.
 Run the application with iPhone as target
 
 Code Coverage Report -
+<img width="1114" alt="image" src="https://user-images.githubusercontent.com/19164536/210665948-a361157d-3d5d-465c-b5c6-fe17af1dc144.png">
+
