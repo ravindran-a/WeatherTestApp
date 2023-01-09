@@ -8,6 +8,7 @@ def shared
   pod 'SwiftLint' #used for linting
   pod 'SnapKit' #used for auto-layoutting on code
   pod 'IOSSecuritySuite' #used for Jailbreak checks
+  pod 'ReachabilitySwift' #used for network reachability
 end
 
 target 'WeatherTestApp' do

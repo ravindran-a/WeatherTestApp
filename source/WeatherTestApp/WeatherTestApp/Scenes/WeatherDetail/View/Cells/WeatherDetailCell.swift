@@ -9,11 +9,11 @@ import UIKit
 
 class WeatherDetailCell: UITableViewCell {
     
-    static let cellIdentifier: String = "WeatherDetailCell"
+    static let cellIdentifier: String = AppStrings.weatherDetailCellIdentifier.rawValue
     
-    private lazy var containerView: UIView = UIFactory.getView(id: "containerView")
-    private lazy var time: UILabel = UIFactory.getLabel(id: "time")
-    private lazy var temperature: UILabel = UIFactory.getLabel(id: "temperature")
+    private lazy var containerView: UIView = UIFactory.getView(id: AppAccessibilityIdentifiers.containerView.rawValue)
+    private lazy var time: UILabel = UIFactory.getLabel(id: AppAccessibilityIdentifiers.time.rawValue)
+    private lazy var temperature: UILabel = UIFactory.getLabel(id: AppAccessibilityIdentifiers.temperature.rawValue)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,22 +33,22 @@ class WeatherDetailCell: UITableViewCell {
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.leading.trailing.top.bottom.equalToSuperview()
-            make.height.equalTo(44.0)
+            make.height.equalTo(AppLayoutOffsetValues.iconWidthHeight.rawValue)
         }
         containerView.addSubview(time)
         time.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(AppLayoutOffsetValues.defaultMarginOffset.rawValue)
             make.centerY.equalToSuperview()
         }
-        time.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        time.font = UIFont.systemFont(ofSize: AppFontSizes.cellDetailFontSize.rawValue, weight: .semibold)
         time.textColor = UIColor.black
         
         containerView.addSubview(temperature)
         temperature.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview().offset(-AppLayoutOffsetValues.defaultMarginOffset.rawValue)
             make.centerY.equalToSuperview()
         }
-        temperature.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        temperature.font = UIFont.systemFont(ofSize: AppFontSizes.cellDetailFontSizeSmall.rawValue, weight: .regular)
         temperature.textColor = UIColor.darkGray
     }
     

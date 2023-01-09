@@ -58,7 +58,7 @@ struct UIFactory {
         let label = UILabel()
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 16.0)
+        label.font = .systemFont(ofSize: AppFontSizes.cellDetailFontSize.rawValue)
         label.accessibilityIdentifier  = accessibilityIdentifier
         label.isAccessibilityElement = isAccessibilityElement
         

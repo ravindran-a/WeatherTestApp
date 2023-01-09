@@ -68,4 +68,8 @@ class WeatherDetailViewModel {
     func getCurrentWeatherIcon() -> UIImage? {
         return WeatherHelper.getImageForWeatherCode(selectedWeatherInfo.currentWeather?.weathercode ?? 0)
     }
+    
+    func isNetworkAvailable() -> Bool {
+        return ReachabilityManager.shared.isNetworkAvailable()
+    }
 }

@@ -11,7 +11,8 @@ import SnapKit
 
 class BaseViewController: UIViewController {
     
-    private var activityIndicator: UIActivityIndicatorView = UIFactory.getActivityIndicator(id: "activityIndicator", style: .large)
+    private var activityIndicator: UIActivityIndicatorView = UIFactory.getActivityIndicator(id: AppAccessibilityIdentifiers.activityIndicator.rawValue, style: .large)
+    private var errorLabel: UILabel! = UIFactory.getLabel(id: AppAccessibilityIdentifiers.errorLabel.rawValue)
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -50,6 +51,24 @@ class BaseViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showErrorLabel(_ message: String) {
+        view.addSubview(errorLabel)
+        errorLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.equalToSuperview().offset(AppLayoutOffsetValues.defaultMarginOffset.rawValue)
+            make.trailing.equalToSuperview().offset(-AppLayoutOffsetValues.defaultMarginOffset.rawValue)
+            errorLabel.text = message
+            errorLabel.font = UIFont.systemFont(ofSize: AppFontSizes.titleFontSize.rawValue)
+            errorLabel.textColor = .red
+            errorLabel.textAlignment = .center
+        }
+    }
+    
+    func hideErrorLabel() {
+        errorLabel.text = nil
+        errorLabel.removeFromSuperview()
     }
     
 }

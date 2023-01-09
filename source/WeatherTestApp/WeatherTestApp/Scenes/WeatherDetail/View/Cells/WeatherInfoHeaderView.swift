@@ -9,12 +9,12 @@ import UIKit
 
 class WeatherInfoHeaderView: UITableViewHeaderFooterView {
     
-    static let identifier: String = "WeatherInfoHeaderView"
+    static let identifier: String = AppStrings.weatherInfoHeaderIdentifier.rawValue
     
-    private lazy var containerView: UIView = UIFactory.getView(id: "containerView")
-    private lazy var cityName: UILabel = UIFactory.getLabel(id: "cityName")
-    private lazy var cityTemperature: UILabel = UIFactory.getLabel(id: "cityTemperature")
-    private lazy var currentWeatherIcon: UIImageView = UIFactory.getImageView(id: "currentWeatherIcon")
+    private lazy var containerView: UIView = UIFactory.getView(id: AppAccessibilityIdentifiers.containerView.rawValue)
+    private lazy var cityName: UILabel = UIFactory.getLabel(id: AppAccessibilityIdentifiers.cityName.rawValue)
+    private lazy var cityTemperature: UILabel = UIFactory.getLabel(id: AppAccessibilityIdentifiers.cityTemperature.rawValue)
+    private lazy var currentWeatherIcon: UIImageView = UIFactory.getImageView(id: AppAccessibilityIdentifiers.currentWeatherIcon.rawValue)
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -33,26 +33,26 @@ class WeatherInfoHeaderView: UITableViewHeaderFooterView {
         }
         containerView.addSubview(cityName)
         cityName.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.top.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(AppLayoutOffsetValues.defaultMarginOffset.rawValue)
+            make.top.equalToSuperview().offset(AppLayoutOffsetValues.defaultMarginOffset.rawValue)
         }
-        cityName.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        cityName.font = UIFont.systemFont(ofSize: AppFontSizes.cellTitleFontSize.rawValue, weight: .semibold)
         cityName.textColor = UIColor.black
         
         containerView.addSubview(cityTemperature)
         cityTemperature.snp.makeConstraints { make in
             make.top.equalTo(cityName.snp.bottom)
-            make.leading.equalToSuperview().offset(16)
-            make.bottom.equalToSuperview().offset(-16)
+            make.leading.equalToSuperview().offset(AppLayoutOffsetValues.defaultMarginOffset.rawValue)
+            make.bottom.equalToSuperview().offset(-AppLayoutOffsetValues.defaultMarginOffset.rawValue)
         }
-        cityTemperature.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        cityTemperature.font = UIFont.systemFont(ofSize: AppFontSizes.cellDetailFontSize.rawValue, weight: .regular)
         cityTemperature.textColor = UIColor.darkGray
         
         containerView.addSubview(currentWeatherIcon)
         currentWeatherIcon.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview().offset(-AppLayoutOffsetValues.defaultMarginOffset.rawValue)
             make.centerY.equalToSuperview()
-            make.height.width.equalTo(44)
+            make.height.width.equalTo(AppLayoutOffsetValues.iconWidthHeight.rawValue)
         }
     }
     

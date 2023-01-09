@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appCoordinator?.start()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        _ = ReachabilityManager.shared.isNetworkAvailable()
+        
         return true
     }
     

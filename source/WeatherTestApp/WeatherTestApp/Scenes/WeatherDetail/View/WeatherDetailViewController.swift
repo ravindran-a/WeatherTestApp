@@ -20,9 +20,20 @@ class WeatherDetailViewController: BaseViewController, UITableViewDelegate, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Weather Detail"
+        self.title = AppStrings.weatherDetailTitle.rawValue
         setupViews()
-        fetchData()
+        fetchData(isRefresh: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(networkAvailable), name: NSNotification.Name(AppNotifications.networkAvailable.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(networkAvailable), name: NSNotification.Name(AppNotifications.networkLost.rawValue), object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func setupViews() {
@@ -31,7 +42,7 @@ class WeatherDetailViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     private func configureTableView() {
-        weatherDetailTableView = UIFactory.getTableView(id: "weatherDetailTableView", style: .plain, dataSource: self, delegate: self)
+        weatherDetailTableView = UIFactory.getTableView(id: AppAccessibilityIdentifiers.weatherDetailTableView.rawValue, style: .plain, dataSource: self, delegate: self)
         weatherDetailTableView.refreshControl = UIRefreshControl()
         weatherDetailTableView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         weatherDetailTableView.register(WeatherInfoHeaderView.self, forHeaderFooterViewReuseIdentifier: WeatherInfoHeaderView.identifier)
@@ -51,15 +62,24 @@ class WeatherDetailViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     private func fetchData(isRefresh: Bool = false) {
-        showLoader()
-        Task {
-            do {
-                try await viewModel.getWeatherDetailData(refresh: isRefresh)
-                self.weatherDetailTableView.reloadData()
-                hideLoader()
-            } catch let error {
-                self.showAlert(title: "Error Fetching Weather Detail", message: error.localizedDescription)
+        if viewModel.isNetworkAvailable() {
+            hideErrorLabel()
+            showLoader()
+            Task {
+                do {
+                    try await viewModel.getWeatherDetailData(refresh: isRefresh)
+                    self.weatherDetailTableView.reloadData()
+                    hideLoader()
+                } catch let error {
+                    self.showAlert(title: "Error Fetching Weather Detail", message: error.localizedDescription)
+                }
             }
+        } else {
+            showErrorLabel("Network not reachable")
         }
+    }
+    
+    @objc func networkAvailable() {
+        fetchData(isRefresh: true)
     }
 }

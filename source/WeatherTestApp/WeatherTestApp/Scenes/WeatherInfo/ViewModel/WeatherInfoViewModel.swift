@@ -84,4 +84,9 @@ class WeatherInfoViewModel {
     func updateTemperatureUnit(_ unit: Int) {
         self.selectedTemperatureUnitIndex = unit
     }
+    
+    func isNetworkAvailable() -> Bool {
+        return ReachabilityManager.shared.isNetworkAvailable()
+    }
+    
 }

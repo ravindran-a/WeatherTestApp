@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import WeatherTestApp
 
 final class BaseViewControllerTests: XCTestCase {
 
@@ -23,6 +24,8 @@ final class BaseViewControllerTests: XCTestCase {
         controller.showLoader()
         controller.hideLoader()
         controller.showAlert(title: "Test", message: "test alert")
+        controller.showErrorLabel("error")
+        controller.hideErrorLabel()
     }
 
 }

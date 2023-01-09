@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import WeatherTestApp
+@testable import WeatherTestApp
 
 final class WeatherDetailViewModelTest: XCTestCase {
     
@@ -31,8 +31,11 @@ final class WeatherDetailViewModelTest: XCTestCase {
     }
     
     func testGetWeatherDetailData() async throws {
+        XCTAssertTrue(viewModel.isNetworkAvailable())
         try? await viewModel.getWeatherDetailData()
+        XCTAssertNotNil(viewModel.getWeatherData())
         try? await viewModel.getWeatherDetailData(refresh: true)
+        XCTAssertNotNil(viewModel.getWeatherData())
     }
     
     func testGenericMethods() async throws {

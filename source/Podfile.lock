@@ -1,24 +1,28 @@
 PODS:
   - IOSSecuritySuite (1.9.5)
+  - ReachabilitySwift (5.0.0)
   - SnapKit (5.6.0)
   - SwiftLint (0.50.3)
 
 DEPENDENCIES:
   - IOSSecuritySuite
+  - ReachabilitySwift
   - SnapKit
   - SwiftLint
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - IOSSecuritySuite
+    - ReachabilitySwift
     - SnapKit
     - SwiftLint
 
 SPEC CHECKSUMS:
   IOSSecuritySuite: 1c04c80a45c9f8899909c70854c05e992acc34aa
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
 
-PODFILE CHECKSUM: 64a10cf9b9dc001fd24ac7ba3048c3259fd08db9
+PODFILE CHECKSUM: ce61c9ad210a9a5b3558726ccc2231714741fe53
 
 COCOAPODS: 1.11.3
